@@ -1,16 +1,14 @@
+using HotelBookingAPI.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using HotelBookingAPI.Helpers;
+using HotelBookingAPI.Repository;
+using HotelBookingAPI.Configuration;
 
 namespace HotelBookingAPI
 {
@@ -27,11 +25,26 @@ namespace HotelBookingAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(o => 
+                o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+            services.AddCors(o =>
+            {
+                o.AddPolicy("PolicyCorsAllowAll", builder =>
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            }
+            );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBookingAPI", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(AutoMapperConfiguration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +57,9 @@ namespace HotelBookingAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelBookingAPI v1"));
             }
 
+            app.ConfigureExceptionHandler();
             app.UseHttpsRedirection();
+            app.UseCors("PolicyCorsAllowAll");
 
             app.UseRouting();
 
