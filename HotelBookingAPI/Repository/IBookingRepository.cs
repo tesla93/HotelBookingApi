@@ -12,7 +12,8 @@ namespace HotelBookingAPI.Repository
         Task<BookingDTO> CreateBooking(BookingDTO booking);
         Task<BookingDTO> UpdateBooking(int bookingId, Booking booking);
         Task<Booking> Get(Expression<Func<Booking, bool>> expression, List<string> includes = null);
-        Task DeleteBooking(int bookingId);
+        Task<List<DateTime>> GetAvailableDates();
+        Task DeleteBooking(Booking booking);
         Task<bool> IsBooked(DateTime checkInDate, DateTime checkOutDate);
         Task<bool> IsBooked(DateTime checkInDate, DateTime checkOutDate, int id);
     }

@@ -18,5 +18,10 @@ namespace HotelBookingAPI.Helpers
         {
             return (checkInDate - checkOutDate).TotalDays >= 0;
         }
+
+        public static bool CheckInIsBeforeToday(DateTime checkInDate)
+        {
+            return (checkInDate - DateTime.Now).TotalDays < 0;
+        }
     }
 }

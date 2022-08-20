@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using HotelBookingAPI;
 using HotelBookingAPI.Helpers;
+using System.Linq;
 
 namespace HotelBookingAPI.Controllers
 {
@@ -40,7 +41,8 @@ namespace HotelBookingAPI.Controllers
             }
             if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) || 
                 Utils.DateBetweenIsGreaterThanThreeDays(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
-                Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate))
+                Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) || 
+                Utils.CheckInIsBeforeToday(bookingDTO.CheckInDate))
             {
                 _logger.LogInformation("Invalid date range");
                 return BadRequest("Invalid date range");
@@ -78,7 +80,8 @@ namespace HotelBookingAPI.Controllers
 
             if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) ||
                Utils.DateBetweenIsGreaterThanThreeDays(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
-               Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate))
+               Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
+               Utils.CheckInIsBeforeToday(bookingDTO.CheckInDate))
             {
                 _logger.LogInformation("Invalid date range");
                 return BadRequest("Invalid date range");
@@ -122,12 +125,38 @@ namespace HotelBookingAPI.Controllers
             }
             try
             {
-                await _bookingRepository.DeleteBooking(id);
+                var booking = await _bookingRepository.Get(q => q.Id == id);
+                if (booking == null)
+                {
+                    _logger.LogError($"Invalid Delete attempt in {nameof(DeleteBooking)}");
+                    return NotFound("Submitted Id is invalid");
+                }
+                await _bookingRepository.DeleteBooking(booking);
                 return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something went wrong in {nameof(DeleteBooking)}");
+                return StatusCode(500, "Internal server error. Please try again later");
+            }
+        }
+
+        [HttpGet(Name = nameof(CheckAvailableDates))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CheckAvailableDates()
+        {
+            try
+            {
+                var availableDates = await _bookingRepository.GetAvailableDates();
+                if (!availableDates.Any())
+                    return NotFound("There are no dates available");
+                return Ok(availableDates);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error ocurred in {nameof(CheckAvailableDates)}");
                 return StatusCode(500, "Internal server error. Please try again later");
             }
         }

@@ -195,3 +195,26 @@ System.AggregateException: Some services are not able to be constructed (Error w
  2022-08-20 04:06:06 [] Application HotelBooking is started
  2022-08-20 04:13:37 [] Application HotelBooking is started
  2022-08-20 04:18:06 [] Application HotelBooking is started
+ 2022-08-20 09:40:03 [] Application HotelBooking is started
+ 2022-08-20 10:03:09 [] Application HotelBooking is started
+ 2022-08-20 10:04:42 [] Application HotelBooking is started
+ 2022-08-20 10:15:54 [] Application HotelBooking is started
+ 2022-08-20 10:16:11 [] Application HotelBooking is started
+ 2022-08-20 10:20:42 [] Application HotelBooking is started
+ 2022-08-20 10:21:34 [] Application HotelBooking is started
+ 2022-08-20 10:22:29 [] Application HotelBooking is started
+ 2022-08-20 10:44:58 [] Application HotelBooking is started
+ 2022-08-20 10:45:59 [] Application HotelBooking is started
+ 2022-08-20 10:47:02 [] Application HotelBooking is started
+ 2022-08-20 10:47:29 [] Application HotelBooking is started
+ 2022-08-20 11:03:45 [] Application HotelBooking is started
+ 2022-08-20 11:04:22 [] Application HotelBooking is started
+ 2022-08-20 11:05:17 [] Application HotelBooking is started
+ 2022-08-20 11:06:37 [] Application HotelBooking is started
+ 2022-08-20 11:18:27 [] Application HotelBooking is started
+ 2022-08-20 11:19:19 [] Application HotelBooking is started
+ 2022-08-20 11:28:34 [] Application HotelBooking is started
+ 2022-08-20 11:29:31 [] Application HotelBooking is started
+ 2022-08-20 11:32:09 [] Application HotelBooking is started
+ 2022-08-20 11:33:04 [] Application HotelBooking is started
+ 2022-08-20 11:34:40 [] Application HotelBooking is started
