@@ -1,0 +1,13 @@
+<p>booking-component works!</p>
+
+<div class="grid mt-5">
+    <div class="col-2">
+        <p-calendar [(ngModel)]="dateBooking" dateFormat="dd.mm.yy"></p-calendar>
+    </div>
+    <div class="col-2">
+        <label for="range">Range</label>
+        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [disabledDates]="disabledDates"  
+        [minDate]="minDateValue" [maxDate]="maxDateValue"  [readonlyInput]="true" inputId="range"></p-calendar>
+    </div>
+
+</div>

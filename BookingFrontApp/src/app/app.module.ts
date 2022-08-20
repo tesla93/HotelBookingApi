@@ -1,0 +1,30 @@
+import { NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
+import { BookingComponent } from './booking-component/booking-component.component';
+import { CalendarModule } from 'primeng/calendar';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    AppHeaderComponent,
+    BookingComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CalendarModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

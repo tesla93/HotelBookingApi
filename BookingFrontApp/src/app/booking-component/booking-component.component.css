@@ -1,0 +1,8 @@
+.p-calendar.p-datepicker{
+    z-index: 1050 !important;
+    top: 0px !important;
+}
+
+.p-datepicker{
+    top: 0px !important;
+}
