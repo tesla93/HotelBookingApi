@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using HotelBookingAPI;
 using HotelBookingAPI.Helpers;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace HotelBookingAPI.Controllers
 {
@@ -28,6 +29,19 @@ namespace HotelBookingAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetBookings()
+        {
+            var bookings = await _bookingRepository.GetAll();
+            if (!bookings.Any())
+                return NotFound();
+            return Ok(bookings);
+
+        }
+
         [HttpPost(Name = nameof(CreateBooking))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -39,9 +53,9 @@ namespace HotelBookingAPI.Controllers
                 _logger.LogError($"Invalid POST attempt in {nameof(CreateBooking)}");
                 return BadRequest(ModelState);
             }
-            if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) || 
+            if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) ||
                 Utils.DateBetweenIsGreaterThanThreeDays(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
-                Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) || 
+                Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
                 Utils.CheckInIsBeforeToday(bookingDTO.CheckInDate))
             {
                 _logger.LogInformation("Invalid date range");
@@ -54,16 +68,8 @@ namespace HotelBookingAPI.Controllers
                 return BadRequest("The chosen dates are not available");
             }
 
-            try
-            {
-                var booking = _bookingRepository.CreateBooking(bookingDTO);
-                return Ok(booking);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong in {nameof(CreateBooking)}");
-                return StatusCode(500, ex.Message);
-            }
+            var booking = _bookingRepository.CreateBooking(bookingDTO);
+            return Ok(booking);
         }
 
         [HttpPut("{id:int}", Name = nameof(UpdateBooking))]
@@ -93,23 +99,16 @@ namespace HotelBookingAPI.Controllers
                 return BadRequest("The chosen dates aren't available");
             }
 
-            try
+            var booking = await _bookingRepository.Get(x => x.Id == id);
+            if (booking == null)
             {
-                var booking = await _bookingRepository.Get(x => x.Id == id);
-                if(booking== null)
-                {
-                    _logger.LogError($"Submitted data invalid in {nameof(UpdateBooking)}");
-                    return BadRequest("Submited data is invalid");
-                }
-                _mapper.Map(bookingDTO, booking);
-                var updatedBooking = await _bookingRepository.UpdateBooking(id, booking);
-                return Ok(updatedBooking);
+                _logger.LogError($"Submitted data invalid in {nameof(UpdateBooking)}");
+                return BadRequest("Submited data is invalid");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong in {nameof(UpdateBooking)}");
-                return StatusCode(500, ex.Message);
-            }
+            _mapper.Map(bookingDTO, booking);
+            var updatedBooking = await _bookingRepository.UpdateBooking(id, booking);
+            return Ok(updatedBooking);
+
         }
 
         [HttpDelete("{id:int}", Name = nameof(DeleteBooking))]
@@ -123,42 +122,27 @@ namespace HotelBookingAPI.Controllers
                 _logger.LogError($"Invalid Delete attempt in {nameof(DeleteBooking)}");
                 return BadRequest();
             }
-            try
+            var booking = await _bookingRepository.Get(q => q.Id == id);
+            if (booking == null)
             {
-                var booking = await _bookingRepository.Get(q => q.Id == id);
-                if (booking == null)
-                {
-                    _logger.LogError($"Invalid Delete attempt in {nameof(DeleteBooking)}");
-                    return NotFound("Submitted Id is invalid");
-                }
-                await _bookingRepository.DeleteBooking(booking);
-                return NoContent();
+                _logger.LogError($"Invalid Delete attempt in {nameof(DeleteBooking)}");
+                return NotFound("Submitted Id is invalid");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong in {nameof(DeleteBooking)}");
-                return StatusCode(500, "Internal server error. Please try again later");
-            }
+            await _bookingRepository.DeleteBooking(booking);
+            return NoContent();
+
         }
 
-        [HttpGet(Name = nameof(CheckAvailableDates))]
+        [HttpGet("available", Name = nameof(GetAvailableDates))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CheckAvailableDates()
+        public async Task<IActionResult> GetAvailableDates()
         {
-            try
-            {
-                var availableDates = await _bookingRepository.GetAvailableDates();
-                if (!availableDates.Any())
-                    return NotFound("There are no dates available");
-                return Ok(availableDates);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"An error ocurred in {nameof(CheckAvailableDates)}");
-                return StatusCode(500, "Internal server error. Please try again later");
-            }
+            var availableDates = await _bookingRepository.GetAvailableDates();
+            if (!availableDates.Any())
+                return NotFound("There are no dates available");
+            return Ok(availableDates);
         }
     }
 }

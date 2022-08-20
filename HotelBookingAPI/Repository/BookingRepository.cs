@@ -113,7 +113,7 @@ namespace HotelBookingAPI.Repository
             return availableDates;
         }
 
-        public async Task<List<Booking>> GetAll(Expression<Func<Booking, bool>> expression = null, Func<IQueryable<Booking>, IOrderedQueryable<Booking>> orderBy = null, List<string> includes = null)
+        public async Task<List<BookingDTO>> GetAll(Expression<Func<Booking, bool>> expression = null, Func<IQueryable<Booking>, IOrderedQueryable<Booking>> orderBy = null, List<string> includes = null)
         {
             IQueryable<Booking> query = _dbBooking;
             if (expression != null)
@@ -130,7 +130,8 @@ namespace HotelBookingAPI.Repository
             {
                 query = orderBy(query);
             }
-            return await query.AsNoTracking().ToListAsync();
+            var bookings = await query.AsNoTracking().ToListAsync();
+            return _mapper.Map<List<BookingDTO>>(bookings);
         }
 
         public async Task Save()

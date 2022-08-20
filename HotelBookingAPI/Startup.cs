@@ -29,9 +29,15 @@ namespace HotelBookingAPI
                 .AddNewtonsoftJson(o => 
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+            
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddAutoMapper(typeof(AutoMapperConfiguration));
+            services.ConfigureRateLimiting();
+            services.AddMemoryCache();
+            services.AddResponseCaching();
+
             services.AddCors(o =>
             {
                 o.AddPolicy("PolicyCorsAllowAll", builder =>
@@ -39,12 +45,12 @@ namespace HotelBookingAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader());
             }
-            );
+           );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBookingAPI", Version = "v1" });
             });
-            services.AddAutoMapper(typeof(AutoMapperConfiguration));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

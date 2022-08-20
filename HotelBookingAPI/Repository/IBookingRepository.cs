@@ -2,6 +2,7 @@
 using HotelBookingAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -16,5 +17,6 @@ namespace HotelBookingAPI.Repository
         Task DeleteBooking(Booking booking);
         Task<bool> IsBooked(DateTime checkInDate, DateTime checkOutDate);
         Task<bool> IsBooked(DateTime checkInDate, DateTime checkOutDate, int id);
+        Task<List<BookingDTO>> GetAll(Expression<Func<Booking, bool>> expression = null, Func<IQueryable<Booking>, IOrderedQueryable<Booking>> orderBy = null, List<string> includes = null);
     }
 }

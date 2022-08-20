@@ -1,8 +1,11 @@
-﻿using HotelBookingAPI.Models;
+﻿using AspNetCoreRateLimit;
+using HotelBookingAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using System.Collections.Generic;
 
 namespace HotelBookingAPI.Helpers
 {
@@ -27,6 +30,27 @@ namespace HotelBookingAPI.Helpers
                     }
                 });
             });
+        }
+
+
+        public static void ConfigureRateLimiting(this IServiceCollection services)
+        {
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint="*",
+                    Limit=1,
+                    Period="1s"
+                }
+            };
+            services.Configure<IpRateLimitOptions>(opt =>
+            {
+                opt.GeneralRules = rateLimitRules;
+            });
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         }
     }
 }
