@@ -6,3 +6,24 @@
 .p-datepicker{
     top: 0px !important;
 }
+
+.p-calendar{
+    min-width: 70% !important;
+}
+.custom-card{
+top: 80px !important;
+position: relative;
+}
+
+.auto-flow{
+    grid-auto-flow: row;
+}
+
+.p-card.p-card-content{
+    padding-top: 0px !important;
+}
+
+::ng-deep .p-calendar{
+        min-width: 100% !important;
+        max-height: 38px !important;
+}

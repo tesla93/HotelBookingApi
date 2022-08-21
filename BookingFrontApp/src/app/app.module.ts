@@ -9,12 +9,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import {DialogModule} from 'primeng/dialog';
+import {CardModule} from 'primeng/card';
+import { BookingItemComponent } from './booking-item/booking-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
     BookingComponent,
+    BookingItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     CalendarModule,
     FormsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
