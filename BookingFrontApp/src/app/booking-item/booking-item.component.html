@@ -10,7 +10,19 @@
             <h6>Room Number: 23</h6>
         </div>
         <div class="col-11 ml-2">
-            <h6>Created: {{bookingItem.created ?? defaultValue}}</h6>
+            <h6>Created: {{bookingItem.created ?? defaultValue | date}}</h6>
         </div>
+        <div class="row justify-content-around">
+            <div class="col-5 ml-2">
+                <button (click)="update()" class="btn btn-success custom-button btn-lg mt-3 m-2">
+                    Update
+                  </button>
+            </div>
+            <div class="col-5 ml-2">
+                <button (click)="delete()" class="btn btn-danger custom-button btn-lg mt-3 m-2">
+                    Delete
+                  </button>
+            </div>
+        </div>        
     </div>
   </div>

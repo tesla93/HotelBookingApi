@@ -14,7 +14,7 @@ namespace HotelBookingAPI.Helpers
             return (checkOutDate - DateTime.Now).TotalDays > 30;
         }
 
-        public static bool CheckInIsGreaterThanOrEqualCheckOut(DateTime checkInDate, DateTime checkOutDate)
+        public static bool CheckInIsGreaterThanOrEqualThanCheckOut(DateTime checkInDate, DateTime checkOutDate)
         {
             return (checkInDate - checkOutDate).TotalDays >= 0;
         }

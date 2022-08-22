@@ -8,6 +8,7 @@ namespace HotelBookingAPI.Models
         public int Id { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
+        public string GuestName { get; set; }
         public int RoomNumber { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

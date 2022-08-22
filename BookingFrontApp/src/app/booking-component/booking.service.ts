@@ -14,19 +14,25 @@ import { HttpError } from "../shared/models/httpErrorModel";
 
 
     getAvailableDates(): Observable<Date[] | HttpError>{
-        console.log(environment.baseUrl)
         return this.httpClient.get<Date[]>(`${environment.baseUrl}booking/available`)
-        .pipe(catchError((err) => this.handleHttpError(err)));;
     }
 
     getAllBookings():Observable<Booking[] | HttpError> {
       return this.httpClient.get<Booking[]>(`${environment.baseUrl}booking`)
+    }
+
+    addBooking(booking: Booking){
+      return this.httpClient.post<any>(`${environment.baseUrl}booking/`, booking)
       .pipe(catchError((err) => this.handleHttpError(err)));
     }
 
-    saveBooking(booking: Booking){
-      return this.httpClient.post<any>(`${environment.baseUrl}booking/`, booking)
-      .subscribe();
+    updateBooking(id: number, booking: Booking){
+      return this.httpClient.put<any>(`${environment.baseUrl}booking/${id}`, booking)
+      .pipe(catchError((err) => this.handleHttpError(err)))
+    }
+
+    delete(id: number){
+      this.httpClient.delete<any>(`${environment.baseUrl}booking/${id}`).subscribe();
     }
 
  private handleHttpError(

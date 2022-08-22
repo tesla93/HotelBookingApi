@@ -1,70 +1,69 @@
 <p-card class="custom-card" header="List of Bookings">
-<div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-4 custom-card mb-4" *ngFor="let booking of bookings">
-    <app-booking-item [bookingItem]="booking"></app-booking-item>
-  </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 mt-5 container-notFound" *ngIf="bookings.length <= 0">
-    <p>There are no Bookings </p>
-  </div>
-  <div class="grid mt-5">
-    <div class="col-2">
-      <button (click)="onAddBooking()" class="btn btn-primary custom-button btn-lg mt-3 m-2">
-        Add Booking
-      </button>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 custom-card mb-4" *ngFor="let booking of bookings">
+      <app-booking-item [bookingItem]="booking" (refreshParent)="refresh()" (updateEvent)="onUpdateItem($event)"></app-booking-item>
     </div>
-  </div>  
-</div>
+    <div class="col-xs-12 col-sm-12 col-md-12 mt-5 container-notFound" *ngIf="bookings?.length <= 0">
+      <p>There are no Bookings </p>
+    </div>
+    <div class="grid mt-5">
+      <div class="col-2">
+        <button (click)="onAddBooking()" class="btn btn-primary custom-button  mt-3 m-2">
+          Add Booking
+        </button>
+      </div>
+    </div>
+  </div>
 </p-card>
 
 
 
 
-<div
-class="modal"
-tabindex="-1"
-role="dialog"
-[ngStyle]="{'display': displayStyle}">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title">New Booking</h4>
-    </div>
-    <div class="modal-body">
-      <form  (ngSubmit)="onSaveBooking()" #bookingForm="ngForm">
-        <div class="row">
-          <div class="grid">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{formTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSaveBooking()" #bookingForm="ngForm">
+          <div class="row">
+            <div class="grid">
               <div class="form-group">
                 <label for="name">Guest Name:</label>
-                <input pInputText [(ngModel)]="bookingDetails.guestName" class="form-control" id="guestName" name="name">
+                <input pInputText [(ngModel)]="bookingDetails.guestName" class="form-control" id="guestName"
+                  name="name">
               </div>
               <div class="form-group mt-3">
                 <div class="grid">
                   <label for="range">Date Range:</label>
-
                 </div>
                 <p-calendar [(ngModel)]="bookingDetails.dateRange" selectionMode="range" [disabledDates]="disabledDates"
-                  [ngModelOptions]="{standalone: true}" [minDate]="minDateValue" [maxDate]="maxDateValue" [showIcon]="true"
-                  dateFormat="dd.mm.yy" [readonlyInput]="true" inputId="range">
+                  [ngModelOptions]="{standalone: true}" [minDate]="minDateValue" [maxDate]="maxDateValue"
+                  [showIcon]="false" dateFormat="dd.mm.yy" [readonlyInput]="true" inputId="range">
                 </p-calendar>
+              </div>
             </div>
 
-            
           </div>
-          
-        </div>         
-          <button type="submit" class="btn btn-success m-2">
-            Save
-          </button>
-          <button type="button" class="btn btn-danger m-2"
-                  (click)="closePopup()">
-            Close
-          </button>
+          <div class="row justify-content-end m2-2">
+            <div class="col-2">
+              <button type="submit" class="btn btn-success m-2">
+                Save
+              </button>
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn btn-danger m-2" (click)="closeModal()">
+                Close
+              </button>
+            </div>
+          </div>
         </form>
 
-    </div>
-    <div class="modal-footer">
+      </div>
+      <div class="modal-footer">
 
+      </div>
     </div>
   </div>
-</div>
 </div>

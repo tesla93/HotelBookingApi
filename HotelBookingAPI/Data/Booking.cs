@@ -12,6 +12,7 @@ namespace HotelBookingAPI.Data
         public DateTime CheckInDate { get; set; }
         [Required]
         public DateTime CheckOutDate { get; set; }
+        public string GuestName{ get; set; }
         public int RoomNumber { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }

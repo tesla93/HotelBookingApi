@@ -63,6 +63,12 @@ namespace HotelBookingAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HotelBookingAPI v1"));
             }
 
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                context.Database.Migrate();
+            }
+
             app.ConfigureExceptionHandler();
             app.UseHttpsRedirection();
             app.UseCors("PolicyCorsAllowAll");

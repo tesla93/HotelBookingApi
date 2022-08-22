@@ -55,7 +55,7 @@ namespace HotelBookingAPI.Controllers
             }
             if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) ||
                 Utils.DateBetweenIsGreaterThanThreeDays(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
-                Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
+                Utils.CheckInIsGreaterThanOrEqualThanCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
                 Utils.CheckInIsBeforeToday(bookingDTO.CheckInDate))
             {
                 _logger.LogInformation("Invalid date range");
@@ -86,7 +86,7 @@ namespace HotelBookingAPI.Controllers
 
             if (Utils.CheckOutIsGreaterThanThirtyDays(bookingDTO.CheckOutDate) ||
                Utils.DateBetweenIsGreaterThanThreeDays(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
-               Utils.CheckInIsGreaterThanOrEqualCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
+               Utils.CheckInIsGreaterThanOrEqualThanCheckOut(bookingDTO.CheckInDate, bookingDTO.CheckOutDate) ||
                Utils.CheckInIsBeforeToday(bookingDTO.CheckInDate))
             {
                 _logger.LogInformation("Invalid date range");

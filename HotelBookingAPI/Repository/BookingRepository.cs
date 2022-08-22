@@ -26,7 +26,7 @@ namespace HotelBookingAPI.Repository
         public async Task<BookingDTO> CreateBooking(BookingDTO bookingDTO)
         {
             Booking booking = _mapper.Map<Booking>(bookingDTO);
-            booking.Created ??= DateTime.Now;
+            booking.Created = DateTime.Now;
             var addedBoooking = await _dbBooking.AddAsync(booking);
             await Save();
             return _mapper.Map<Booking, BookingDTO>(addedBoooking.Entity);
