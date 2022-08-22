@@ -36,7 +36,7 @@ Frontend:
 | GET  | /api/booking           | Get all reservations |
 | POST | /api/booking           | Create Reservation |
 | PUT  | /api/booking/{id}      | Modify a reservation |
-| DELETE | /api/booking/cancel/{id} | Delete a reservation |
+| DELETE | /api/booking/{id}    | Delete a reservation |
 | GET  | api/booking/available  | Get available dates |
 
 ## Instructions
