@@ -12,6 +12,7 @@ using HotelBookingAPI.Helpers;
 using System.Linq;
 using System.Collections.Generic;
 
+//For this controller exceptions are handled globally
 namespace HotelBookingAPI.Controllers
 {
     [Route("api/[controller]")]
