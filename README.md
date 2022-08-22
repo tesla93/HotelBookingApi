@@ -43,7 +43,7 @@ Frontend:
 
 1. To make this project work, open a terminal in the HotelBookingAPI folder and type `dotnet restore`. 
 
-2. Once you have finished inside the terminal, type `dotnet run` and this will cause an api to be raised at the address https://localhost:44357. Automatically a database will be created in SQL Server and the corresponding migrations will be applied
+2. Once you have finished inside the terminal, type `dotnet run` and this will cause an api to be raised at the address https://localhost:44357. Automatically a database will be created in SQL Server and the corresponding migrations will be applied.
 
 3. In https://localhost:44357/swagger/index.html the api is documented.
 
