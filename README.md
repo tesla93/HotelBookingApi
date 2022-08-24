@@ -21,7 +21,7 @@ API:
 - Entity Framework
 - Serilog
 
-Unit Test for APIÑ
+Unit Test for API
 - Xunit
 - FluentAssertions
 - Moq
