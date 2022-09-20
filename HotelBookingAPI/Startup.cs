@@ -30,7 +30,7 @@ namespace HotelBookingAPI
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddAutoMapper(typeof(AutoMapperConfiguration));

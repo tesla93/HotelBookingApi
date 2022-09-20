@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingAPI", "HotelBookingAPI\HotelBookingAPI.csproj", "{4399E61D-DE34-40A7-9A95-AE545B4B5E15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBookingUnitTest", "BookingUnitTest\HotelBookingUnitTest.csproj", "{B6BBF373-ED29-41CF-AC5E-088DC140DD60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingUnitTest", "BookingUnitTest\HotelBookingUnitTest.csproj", "{B6BBF373-ED29-41CF-AC5E-088DC140DD60}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3F6878DD-43FF-4013-B252-20424BD76687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B6BBF373-ED29-41CF-AC5E-088DC140DD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6BBF373-ED29-41CF-AC5E-088DC140DD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6BBF373-ED29-41CF-AC5E-088DC140DD60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6878DD-43FF-4013-B252-20424BD76687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6878DD-43FF-4013-B252-20424BD76687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6878DD-43FF-4013-B252-20424BD76687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6878DD-43FF-4013-B252-20424BD76687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -69,7 +69,7 @@ namespace HotelBookingAPI.Controllers
                 return BadRequest("The chosen dates are not available");
             }
 
-            var booking = _bookingRepository.CreateBooking(bookingDTO);
+            var booking = await _bookingRepository.CreateBooking(bookingDTO);
             return Ok(booking);
         }
 

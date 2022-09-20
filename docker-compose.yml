@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  hotelbookingapi:
+    image: ${DOCKER_REGISTRY-}hotelbookingapi
+    build:
+      context: .
+      dockerfile: HotelBookingAPI/Dockerfile
+      
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=2Secure*Password2
+      - ACCEPT_EULA=Y
+    ports:
+      - "6460:1433"
